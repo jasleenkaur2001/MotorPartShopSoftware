@@ -1,6 +1,7 @@
 
 <?php
  include'../includes/connection.php';
+ include'../includes/sidebar.php';
  $query = 'SELECT DATE  ,SUM(CASH) as SALES from transaction GROUP by DATE;';
 
 
@@ -46,6 +47,11 @@ chart.render();
 <body>
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
+<br>
+<br>
+<br>
+<h3 style = "text-align: center;"><b> Transaction History</b></h3></div>
+<br>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -88,6 +94,9 @@ chart.render();
 ?>
   </tbody>
 </table>
+<?php
+// include'../includes/footer.php';
+?>
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
