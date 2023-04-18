@@ -16,12 +16,17 @@ include'../includes/connection.php';
         
               switch($_GET['action']){
                 case 'add':  
-                for($i=0; $i < $qty; $i++){
+                // for($i=0; $i < $qty; $i++){
+                //     $query = "INSERT INTO product
+                //               (PRODUCT_ID, PRODUCT_CODE, NAME, DESCRIPTION, QTY_STOCK, ON_HAND, PRICE, CATEGORY_ID, SUPPLIER_ID, DATE_STOCK_IN)
+                //               VALUES (Null,'{$pc}','{$name}','{$desc}',1,1,{$pr},{$cat},{$supp},'{$dats}')";
+                //     mysqli_query($db,$query)or die ('Error in updating product in Database '.$query);
+                //     }
                     $query = "INSERT INTO product
-                              (PRODUCT_ID, PRODUCT_CODE, NAME, DESCRIPTION, QTY_STOCK, ON_HAND, PRICE, CATEGORY_ID, SUPPLIER_ID, DATE_STOCK_IN)
-                              VALUES (Null,'{$pc}','{$name}','{$desc}',1,1,{$pr},{$cat},{$supp},'{$dats}')";
-                    mysqli_query($db,$query)or die ('Error in updating product in Database '.$query);
-                    }
+                    (PRODUCT_ID, PRODUCT_CODE, NAME, DESCRIPTION, QTY_STOCK, ON_HAND, PRICE, CATEGORY_ID, SUPPLIER_ID, DATE_STOCK_IN)
+                    VALUES (Null,'{$pc}','{$name}','{$desc}','{$qty}',{$qty},{$pr},{$cat},{$supp},'{$dats}')";
+          mysqli_query($db,$query)or die ('Error in updating product in Database '.$query);
+                
                     $date_curr = date("d/m/Y");
                     // $query_supply = "INSERT INTO supply values (rand(),'{$supp}','{$name}','{$qty}','{$pr}', '{$date_curr}'";
                     $random_number = rand(100,999);

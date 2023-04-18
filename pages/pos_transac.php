@@ -17,12 +17,40 @@ session_start();
               
               $countID = count($_POST['name']);
               // echo "<table>";
+              
+              echo '<script>console.log("run")</script>';
               switch($_GET['action']){
                 case 'add':  
+                for($i=0;$i<$countID;$i++){
+                  $product_name = $_POST['name'];
+                  $product_code = $_POST['code'][$i];
+                  $quantity_demand = $_POST['quantity'][$i];
+                  $query = "SELECT * FROM product WHERE PRODUCT_CODE = '$product_code'";
+                  $result = mysqli_query($db, $query);
+                  $product = mysqli_fetch_assoc($result);
+                  if($product['QTY_STOCK'] < $quantity_demand){
+                    echo '<script>alert("only '.$product['QTY_STOCK'].' number of '.$product['NAME'].' is available")</script>';
+                   echo "<script>
+                   window.location = 'pos.php';
+                 </script>";
+                    exit(); 
+                  }
+                }
                 for($i=1; $i<=$countID; $i++)
                   {
                     // echo "'{$today}', '".$_POST['name'][$i-1]."', '".$_POST['quantity'][$i-1]."', '".$_POST['price'][$i-1]."', '{$emp}', '{$rol}' <br>";
-
+                    $product_code = $_POST['code'][$i-1];
+                    $quantity_demand = $_POST['quantity'][$i-1];
+                    
+                    $query_select= "SELECT * FROM product WHERE PRODUCT_CODE = '$product_code'";
+                    $res = mysqli_query($db, $query_select);
+                    $product = mysqli_fetch_assoc($res);
+    
+                    $quantity_STOCK = $product['QTY_STOCK'];
+                    $quantity_available = $quantity_STOCK-$quantity_demand;
+                    
+                    $update_query = "UPDATE product SET QTY_STOCK = '$quantity_available' , ON_HAND = '$quantity_available'  WHERE PRODUCT_CODE = '$product_code'";
+                    mysqli_query($db,$update_query);
                     $query = "INSERT INTO `transaction_details`
                                (`ID`, `TRANS_D_ID`, `PRODUCTS`, `QTY`, `PRICE`, `EMPLOYEE`, `ROLE`)
                                VALUES (Null, '{$today}', '".$_POST['name'][$i-1]."', '".$_POST['quantity'][$i-1]."', '".$_POST['price'][$i-1]."', '{$emp}', '{$rol}')";

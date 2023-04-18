@@ -21,7 +21,8 @@ if(filter_input(INPUT_POST, 'addpos')){
                 'id' => filter_input(INPUT_GET, 'id'),
                 'name' => filter_input(INPUT_POST, 'name'),
                 'price' => filter_input(INPUT_POST, 'price'),
-                'quantity' => filter_input(INPUT_POST, 'quantity')
+                'quantity' => filter_input(INPUT_POST, 'quantity'),
+                'code' => filter_input(INPUT_POST, 'code')
             );   
         }
         else { //product already exists, increase quantity
@@ -37,12 +38,14 @@ if(filter_input(INPUT_POST, 'addpos')){
     }
     else { //if shopping cart doesn't exist, create first product with array key 0
         //create array using submitted form data, start from key 0 and fill it with values
+        echo "else run";
         $_SESSION['pointofsale'][0] = array
         (
             'id' => filter_input(INPUT_GET, 'id'),
             'name' => filter_input(INPUT_POST, 'name'),
             'price' => filter_input(INPUT_POST, 'price'),
-            'quantity' => filter_input(INPUT_POST, 'quantity')
+            'quantity' => filter_input(INPUT_POST, 'quantity'),
+            'code' => filter_input(INPUT_POST, 'code')
         );
     }
 }
@@ -63,7 +66,7 @@ if(filter_input(INPUT_GET, 'action') == 'delete'){
 
 function pre_r($array){
     echo '<pre>';
-    print_r($array);
+    // print_r($array);
     echo '</pre>';
 }
                 ?>
@@ -116,6 +119,7 @@ function pre_r($array){
         <tr>  
              <th width="55%">Spare part Name</th>  
              <th width="10%">Quantity</th>  
+             <th width="10%">Code</th>  
              <th width="15%">Price</th>  
              <th width="15%">Total</th>  
              <th width="5%">Action</th>  
@@ -123,10 +127,11 @@ function pre_r($array){
         <?php  
 
         if(!empty($_SESSION['pointofsale'])):  
-            
+           
              $total = 0;  
         
-             foreach($_SESSION['pointofsale'] as $key => $product): 
+             foreach($_SESSION['pointofsale'] as $key => $product):
+              
         ?>  
         <tr>  
           <td>
@@ -137,6 +142,10 @@ function pre_r($array){
            <td>
             <input type="hidden" name="quantity[]" value="<?php echo $product['quantity']; ?>">
             <?php echo $product['quantity']; ?>
+          </td> 
+          <td>
+            <input type="hidden" name="code[]" value="<?php echo $product['code']; ?>">
+            <?php echo $product['code']; ?>
           </td>  
 
            <td>

@@ -53,6 +53,7 @@ $sup .= "</select>";
                    <tr>
                      <th>Spare part code</th>
                      <th>Name</th>
+                     <th>Quantity</th>
                      <th>Price</th>
                      <th>Category</th>
                      <th>Action</th>
@@ -61,7 +62,8 @@ $sup .= "</select>";
           <tbody>
 
 <?php                  
-    $query = 'SELECT PRODUCT_ID, PRODUCT_CODE, NAME, PRICE, CNAME, DATE_STOCK_IN FROM product p join category c on p.CATEGORY_ID=c.CATEGORY_ID GROUP BY PRODUCT_CODE';
+    //$query = 'SELECT PRODUCT_ID, PRODUCT_CODE, NAME, PRICE, CNAME, DATE_STOCK_IN FROM product p join category c on p.CATEGORY_ID=c.CATEGORY_ID GROUP BY PRODUCT_CODE';
+    $query = 'select * from product p join category c on p.CATEGORY_ID = c.CATEGORY_ID';
         $result = mysqli_query($db, $query) or die (mysqli_error($db));
       
             while ($row = mysqli_fetch_assoc($result)) {
@@ -69,6 +71,7 @@ $sup .= "</select>";
                 echo '<tr>';
                 echo '<td>'. $row['PRODUCT_CODE'].'</td>';
                 echo '<td>'. $row['NAME'].'</td>';
+                echo '<td>'. $row['QTY_STOCK'].'</td>';
                 echo '<td>'. $row['PRICE'].'</td>';
                 echo '<td>'. $row['CNAME'].'</td>';
                 echo "<script>console.log('Debug Objects: " . $row['PRODUCT_CODE'] . "' );</script>";
